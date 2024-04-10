@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"fmt"
+	"image/jpeg"
 	"image/png"
 	"log"
 	"net/http"
@@ -49,15 +50,41 @@ func main() {
 		}
 
 		// Convert PNG to Jpegli
-		convertedImageBytes, err := ToJpeg(inputImageBytes)
+		jpegliBytes, err := ToJpeg(inputImageBytes)
 		if err != nil {
 			log.Printf("Error converting PNG %s to Jpegli: %v", arg, err)
 			continue
 		}
 
+		// Convert PNG to JPEG using standard compression
+		jpegBuf := new(bytes.Buffer)
+		img, err := png.Decode(bytes.NewReader(inputImageBytes))
+		if err != nil {
+			log.Printf("Error decoding PNG %s: %v", arg, err)
+			continue
+		}
+		if err := jpeg.Encode(jpegBuf, img, &jpeg.Options{Quality: 90}); err != nil {
+			log.Printf("Error encoding JPEG %s: %v", arg, err)
+			continue
+		}
+
+		// Calculate the compression difference
+		pngSize := len(inputImageBytes)
+		jpegliSize := len(jpegliBytes)
+		jpegSize := len(jpegBuf.Bytes())
+
+		jpegliCompressionRatio := float64(jpegliSize) / float64(pngSize) * 100
+		jpegCompressionRatio := float64(jpegSize) / float64(pngSize) * 100
+
+		fmt.Printf("File: %s\n", arg)
+		fmt.Printf("PNG size: %d bytes\n", pngSize)
+		fmt.Printf("Jpegli size: %d bytes (%.2f%% of PNG)\n", jpegliSize, jpegliCompressionRatio)
+		fmt.Printf("JPEG size: %d bytes (%.2f%% of PNG)\n", jpegSize, jpegCompressionRatio)
+		fmt.Printf("Jpegli compression is %.2f%% smaller than JPEG compression\n", jpegCompressionRatio-jpegliCompressionRatio)
+
 		// Construct the output file name
 		outputFilename := filepath.Base(arg[:len(arg)-len(filepath.Ext(arg))]) + ".jpeg"
-		if err := os.WriteFile(outputFilename, convertedImageBytes, 0644); err != nil {
+		if err := os.WriteFile(outputFilename, jpegliBytes, 0644); err != nil {
 			log.Printf("Error saving Jpegli file %s: %v", outputFilename, err)
 			continue
 		}
