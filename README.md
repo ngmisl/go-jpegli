@@ -10,7 +10,7 @@
 
 ## Build
 
-go build -o convert_to_jpegli main.go
+`go build -o convert_to_jpegli main.go`
 
 ## Add to zsh
 
