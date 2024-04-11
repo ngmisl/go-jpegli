@@ -32,6 +32,7 @@ func ToJpeg(imageBytes []byte) ([]byte, error) {
 	if err := jpegli.Encode(buf, img, nil); err != nil {
 		return nil, err
 	}
+
 	return buf.Bytes(), nil
 }
 
@@ -63,7 +64,7 @@ func main() {
 			log.Printf("Error decoding PNG %s: %v", arg, err)
 			continue
 		}
-		if err := jpeg.Encode(jpegBuf, img, &jpeg.Options{Quality: 90}); err != nil {
+		if err := jpeg.Encode(jpegBuf, img, &jpeg.Options{Quality: 100}); err != nil {
 			log.Printf("Error encoding JPEG %s: %v", arg, err)
 			continue
 		}
@@ -72,7 +73,6 @@ func main() {
 		pngSize := len(inputImageBytes)
 		jpegliSize := len(jpegliBytes)
 		jpegSize := len(jpegBuf.Bytes())
-
 		jpegliCompressionRatio := float64(jpegliSize) / float64(pngSize) * 100
 		jpegCompressionRatio := float64(jpegSize) / float64(pngSize) * 100
 
@@ -83,9 +83,12 @@ func main() {
 		fmt.Printf("Jpegli compression is %.2f%% smaller than JPEG compression\n", jpegCompressionRatio-jpegliCompressionRatio)
 
 		// Construct the output file name
+		outputDir := filepath.Dir(arg)
 		outputFilename := filepath.Base(arg[:len(arg)-len(filepath.Ext(arg))]) + ".jpeg"
-		if err := os.WriteFile(outputFilename, jpegliBytes, 0644); err != nil {
-			log.Printf("Error saving Jpegli file %s: %v", outputFilename, err)
+		outputPath := filepath.Join(outputDir, outputFilename)
+
+		if err := os.WriteFile(outputPath, jpegliBytes, 0644); err != nil {
+			log.Printf("Error saving Jpegli file %s: %v", outputPath, err)
 			continue
 		}
 
