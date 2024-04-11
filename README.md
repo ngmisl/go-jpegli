@@ -15,4 +15,5 @@ go build -o convert_to_jpegli main.go
 ## Add to zsh
 
 `nvim ~/.zshrc`
+
 `alias convert_to_jpegli="$HOME/ <add paths> /convert_to_jpegli"`
