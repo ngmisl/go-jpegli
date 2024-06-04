@@ -2,5 +2,7 @@ github.com/gen2brain/jpegli v0.1.2 h1:2BFpt6sdze/ROP/zGiKWOiKaNZCxqDcS7I0/oNksJo
 github.com/gen2brain/jpegli v0.1.2/go.mod h1:ArNook7A3NfU+ibQ5gko0DgQKilME4Q0sEt9rcSPaN8=
 github.com/gen2brain/jpegli v0.2.0 h1:v12qDA6zydwvp4AxtwlC791OT11tMAExKiaTT7BhFlU=
 github.com/gen2brain/jpegli v0.2.0/go.mod h1:ArNook7A3NfU+ibQ5gko0DgQKilME4Q0sEt9rcSPaN8=
+github.com/gen2brain/jpegli v0.2.2 h1:GrhioJ/ZqrI+N4gKMBs+sggCipBEU141MJwQKJYAmbo=
+github.com/gen2brain/jpegli v0.2.2/go.mod h1:ArNook7A3NfU+ibQ5gko0DgQKilME4Q0sEt9rcSPaN8=
 github.com/tetratelabs/wazero v1.7.0 h1:jg5qPydno59wqjpGrHph81lbtHzTrWzwwtD4cD88+hQ=
 github.com/tetratelabs/wazero v1.7.0/go.mod h1:ytl6Zuh20R/eROuyDaGPkp82O9C/DJfXAwJfQ3X6/7Y=
