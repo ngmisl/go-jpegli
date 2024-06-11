@@ -1,6 +1,6 @@
 module example.com/jpe
 
-go 1.22.2
+go 1.22.4
 
 require github.com/gen2brain/jpegli v0.2.2
 

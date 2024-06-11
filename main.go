@@ -44,7 +44,7 @@ func main() {
 
 	for _, arg := range os.Args[1:] {
 		// Read the input PNG image from a file
-		inputImageBytes, err := os.ReadFile(arg)
+		inputImageBytes, err := os.ReadFile(filepath.Clean(arg))
 		if err != nil {
 			log.Printf("Error reading PNG file %s: %v", arg, err)
 			continue
@@ -87,7 +87,7 @@ func main() {
 		outputFilename := filepath.Base(arg[:len(arg)-len(filepath.Ext(arg))]) + ".jpeg"
 		outputPath := filepath.Join(outputDir, outputFilename)
 
-		if err := os.WriteFile(outputPath, jpegliBytes, 0644); err != nil {
+		if err := os.WriteFile(filepath.Clean(outputPath), jpegliBytes, 0644); err != nil {
 			log.Printf("Error saving Jpegli file %s: %v", outputPath, err)
 			continue
 		}
